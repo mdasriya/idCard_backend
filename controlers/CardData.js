@@ -83,9 +83,15 @@ exports.saveCardData = async (req, res) => {
 };
 
 exports.getAllEntryes = async(req, res) => {
+
+    
+  let page = Number(req.query.page) || 1 
+
+let limit = Number(req.query.limit) || 30
+
     try{
         console.log("insid function ")
-        const data = await CardData.find().populate("formField").exec();
+        const data = await CardData.find().skip((page-1)*limit).limit(limit).populate("formField").exec();
 
         // console.log("data ", data);
 
